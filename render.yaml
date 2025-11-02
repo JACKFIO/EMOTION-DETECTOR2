@@ -3,8 +3,3 @@ services:
     name: emotion-detector
     env: python
     plan: free
-    region: oregon
-    buildCommand: pip install -r requirements.txt
-    envVars:
-      - key: PYTHON_VERSION
-        value: 3.12.3
