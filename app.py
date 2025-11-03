@@ -93,17 +93,25 @@ def detect_emotion(img_path):
     if model is None:
         return "Error", 0.0
     try:
+        # Ensure eager mode is enabled
+        tf.config.run_functions_eagerly(True)
+
+        # Preprocess image
         img = image.load_img(img_path, color_mode='grayscale', target_size=(48, 48))
         img_array = image.img_to_array(img)
         img_array = np.expand_dims(img_array, axis=0)
         img_array /= 255.0
 
-        with graph.as_default():
-            predictions = model.predict(img_array, verbose=0)
-            emotion_idx = np.argmax(predictions[0])
-            confidence = float(predictions[0][emotion_idx]) * 100
-            emotion_label = EMOTIONS[emotion_idx]
-            return emotion_label, confidence
+        # Predict in eager mode
+        predictions = model.predict(img_array, verbose=0)
+        emotion_idx = np.argmax(predictions[0])
+        confidence = float(predictions[0][emotion_idx]) * 100
+        emotion_label = EMOTIONS[emotion_idx]
+
+        # Reset eager flag to normal (saves performance)
+        tf.config.run_functions_eagerly(False)
+
+        return emotion_label, confidence
 
     except Exception as e:
         print(f"[ERROR] Emotion detection failed: {e}")
@@ -239,3 +247,4 @@ if __name__ == '__main__':
 
     # Use threaded=True to prevent worker blocking
     app.run(debug=True, host='0.0.0.0', port=5000, threaded=True)
+
