@@ -135,6 +135,8 @@ def save_to_database(name, matric, email, img_path, emotion, confidence):
 @app.route('/')
 def index():
     """Home page - shows the upload form"""
+    print("Templates folder:", app.template_folder)
+    print("Available files:", os.listdir(app.template_folder))
     return render_template('index.html')
 
 @app.route('/submit', methods=['POST'])
@@ -257,4 +259,5 @@ if __name__ == '__main__':
     print("📱 Open your browser and go to: http://127.0.0.1:5000")
     print("⏹️  Press CTRL+C to stop the server\n")
     
+
     app.run(debug=True, host='0.0.0.0', port=5000)
