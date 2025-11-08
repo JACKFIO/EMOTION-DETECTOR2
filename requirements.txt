@@ -1,8 +1,8 @@
-Flask
-tensorflow
-numpy
-Pillow
-opencv-python-headless
-matplotlib
-scikit-learn
-gunicorn
+flask==3.0.3
+werkzeug==3.0.4
+tensorflow==2.16.1
+keras==3.3.3
+numpy==1.26.4
+opencv-python==4.10.0.84
+pillow==10.3.0
+sqlite3-binary==0.0.1
